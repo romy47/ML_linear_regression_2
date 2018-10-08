@@ -13,11 +13,22 @@ def best_fit_slope_and_intercept(xs, ys):
     b = (np.mean(ys)-m*np.mean(xs))
     return m, b
 
+def squared_error(ys_origin, line):
+    return sum((line-ys_origin)**2)
+
+def coefficient_of_determination(ys_origin, line):
+    y_mean_line = [np.mean(ys_origin) for y in ys_origin]
+    squared_error_regr = squared_error(ys_origin, line)
+    squared_error_y_mean = squared_error(ys_origin, y_mean_line)
+    return 1 - (squared_error_regr/squared_error_y_mean)
+
 m,b = best_fit_slope_and_intercept(xs, ys)
 regression_line = [(m*x+b) for x in xs]
 
 predict_for = [10, 12, 14]
 predicted_result = [(m*x+b )for x in predict_for]
+
+print('r squared: ', coefficient_of_determination(ys, regression_line))
 
 plot.scatter(xs, ys, color='blue')
 plot.scatter(predict_for, predicted_result, color='green')
