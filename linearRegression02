@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plot
+from matplotlib import style
+
+style.use('ggplot')
+
+
+xs = np.array([1, 2, 3, 4, 5, 6], dtype=np.float64)
+ys = np.array([5, 4, 6, 5, 6, 7], dtype=np.float64)
+
+def best_fit_slope_and_intercept(xs, ys):
+    m = (np.mean(xs)*np.mean(ys) - np.mean(xs*ys))/((np.mean(xs))**2 - (np.mean(xs**2)))
+    b = (np.mean(ys)-m*np.mean(xs))
+    return m, b
+
+m,b = best_fit_slope_and_intercept(xs, ys)
+regression_line = [(m*x+b) for x in xs]
+
+predict_for = [10, 12, 14]
+predicted_result = [(m*x+b )for x in predict_for]
+
+plot.scatter(xs, ys, color='blue')
+plot.scatter(predict_for, predicted_result, color='green')
+plot.plot(xs, regression_line)
+plot.show()
